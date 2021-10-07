@@ -4,6 +4,7 @@ import seaborn as sns
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection  import train_test_split
 from sklearn.metrics import accuracy_score
+#importation des donées CSV
 df_credit=pd.read_csv('train.csv')
 
 df=df_credit.copy()
@@ -17,6 +18,7 @@ var_num=['ApplicantIncome', 'CoapplicantIncome', 'LoanAmount',
        'Loan_Amount_Term',]
 print('les variable categorique sont: ',var_cat)
 print('les variable numerique sont: ',var_num)
+
 #cleaning
 df['Gender'].fillna(df['Gender'].mode()[0],inplace=True)
 df['Married'].fillna(df['Married'].mode()[0],inplace=True)
@@ -27,7 +29,7 @@ df['Credit_History'].fillna(df['Credit_History'].mode()[0],inplace=True)
 df['LoanAmount'].fillna(df['LoanAmount'].median(),inplace=True)
 df['Loan_Amount_Term'].fillna(df['Loan_Amount_Term'].median(),inplace=True)
 df.info()
-#l'annalyse univariée
+#l'analyse univariée
 df['Loan_Status'].value_counts(normalize=True)*100
 #les variable categoriques
 df['Gender'].value_counts()
@@ -81,7 +83,7 @@ matrix=df.corr()
 f,ax=plt.subplots(figsize=(12,15))
 sns.heatmap(matrix,vmax=.8,square=True, cmap='BuPu',annot=True)
 
-# Creation du modèle
+# Creation du modèle avec régression logistique pour la classification binaire
 
 df_cat=df[var_cat]
 
@@ -97,7 +99,7 @@ clf=LogisticRegression()
 
 clf.fit(x_train,y_train)
 pred=clf.predict(x_test)
-
+# la précision du modéle
 accuracy_score(y_test, pred)
 
 
